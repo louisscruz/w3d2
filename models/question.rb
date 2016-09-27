@@ -40,6 +40,7 @@ class Question
   end
 
   attr_accessor :title, :body, :user_id
+  attr_reader :id
 
   def initialize(options)
     @id = options['id']

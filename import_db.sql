@@ -62,12 +62,15 @@ VALUES
 INSERT INTO
   questions(title, body, user_id)
 VALUES
-  ('WTF?', 'What the hell...', (SELECT id FROM users WHERE fname = 'Louis'));
+  ('WTF?', 'What the hell...', (SELECT id FROM users WHERE fname = 'Louis')),
+  ('ROFL', 'SOMETHING', (SELECT id FROM users WHERE fname = 'Micah'));
 
 INSERT INTO
   question_follows (user_id, question_id)
 VALUES
-  ((SELECT id FROM users WHERE fname = 'Micah'), (SELECT id FROM questions WHERE title = 'WTF?'));
+  ((SELECT id FROM users WHERE fname = 'Micah'), (SELECT id FROM questions WHERE title = 'WTF?')),
+  ((SELECT id FROM users WHERE fname = 'Micah'), (SELECT id FROM questions WHERE title = 'ROFL')),
+  ((SELECT id FROM users WHERE fname = 'Louis'), (SELECT id FROM questions WHERE title = 'ROFL'));
 
 INSERT INTO
   replies (body, question_id, reply_id, user_id)
@@ -95,14 +98,7 @@ VALUES (
       questions
     WHERE
       title = 'WTF?'
-  ), ( 1
-    -- SELECT
-    --   id
-    -- FROM
-    --   replies
-    -- WHERE
-    --   body = 'IDK'
-  ), (
+  ), 1, (
     SELECT
       id
     FROM
@@ -122,6 +118,21 @@ VALUES
       users
     WHERE
       fname = 'Micah'
+  ),(
+    SELECT
+      id
+    FROM
+      questions
+    WHERE
+      title = 'WTF?'
+  )), (
+  (
+    SELECT
+      id
+    FROM
+      users
+    WHERE
+      fname = 'Louis'
   ),(
     SELECT
       id

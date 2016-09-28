@@ -46,4 +46,11 @@ louis = User.find_by_id(2)
 # p QuestionFollow.follower_for_question_id(1)
 # p QuestionFollow.followed_questions_for_user_id(1)
 
-p louis.followers
+# p louis.followers
+# HARD SHIT
+
+ # p QuestionLike.likers_for_question_id(1)
+ # p QuestionLike.num_likes_for_question_id(1)
+ # p QuestionLike.num_likes_for_question_id(3)
+ # p QuestionLike.liked_questions_for_user_id(1)
+ p louis.karma

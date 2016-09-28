@@ -74,6 +74,30 @@ class Reply
     @reply_id = options['reply_id']
   end
 
+  def create
+    raise "Reply exists" if @id
+    QuestionsDatabase.instance.execute(<<-SQL, @body, @question_id, @user_id, @reply_id)
+      INSERT INTO
+        replies (body, question_id, user_id, reply_id)
+      VALUES
+        (?, ?, ?, ?)
+    SQL
+    @id = QuestionsDatabase.instance.last_insert_row_id
+  end
+
+  def update
+    raise "Not in database" unless @id
+    QuestionsDatabase.instance.execute(<<-SQL, @body, @question_id, @user_id, @reply_id, @id)
+      UPDATE
+        replies
+      SET
+        (body = ?, question_id = ?, user_id = ?, reply_id = ?)
+      WHERE
+        id = ?
+    SQL
+  end
+
+
   def author
     User.find_by_id(@user_id)
   end
